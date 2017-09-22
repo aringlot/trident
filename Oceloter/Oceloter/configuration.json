@@ -1,0 +1,51 @@
+﻿{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/values",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 55169,
+      "UpstreamPathTemplate": "/api/values",
+      "UpstreamHttpMethod": [ "Get" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+        "Provider": "IdentityServer",
+        "AllowedScopes": [
+          "api",
+        ],
+        "IdentityServerConfig": {
+          "ProviderRootUrl": "http://localhost:5000",
+          "ApiName": "api",
+          "ApiSecret": "secret",
+          "RequireHttps": false
+        }
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[sub] > value"
+      },
+      "RequestIdKey": "OcRequestId"
+    },
+    {
+      "DownstreamPathTemplate": "/connect/token/",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 5000,
+      "UpstreamPathTemplate": "/idsrv/token/",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      }
+    }
+  ],
+
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/admin"
+  }
+}

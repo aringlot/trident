@@ -35,7 +35,7 @@
       "DownstreamHost": "localhost",
       "DownstreamPort": 5000,
       "UpstreamPathTemplate": "/idsrv/token/",
-      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "UpstreamHttpMethod": [ "Post" ],
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 10,

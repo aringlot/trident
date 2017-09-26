@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Oceloter.Extensions;
 
 namespace Oceloter
 {
@@ -47,8 +48,10 @@ namespace Oceloter
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
-
-            await app.UseOcelot();
+                                   
+            await app
+                .UseAuthorizationHeader()
+                .UseOcelot();
         }
     }
 }

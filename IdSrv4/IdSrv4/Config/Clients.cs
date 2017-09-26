@@ -21,7 +21,9 @@ namespace IdSrv4.Config
                         new Secret("secret".Sha256())
                     },
 
-                    AllowedScopes = { "api" }
+                    AllowedScopes = { "api" },
+
+                    AccessTokenType = AccessTokenType.Jwt
                 }
             };
         }

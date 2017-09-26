@@ -17,11 +17,18 @@ namespace Queryer
 
         static void CallApi(TokenResponse response)
         {
-            using (var client = new HttpClient())
+            var cookieContainer = new CookieContainer();
+            using(var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
+            using (var client = new HttpClient(handler))
             {
-                client.SetBearerToken(response.AccessToken);
-
-                Console.WriteLine(client.GetStringAsync(baseUrl + "/api/values").Result);
+                //client.SetBearerToken(response.AccessToken);
+                var message = new HttpRequestMessage(HttpMethod.Get, baseUrl + "/api/values");
+                //message.Headers.Add("Cookie", $".MinsideApp={response.AccessToken};test={Guid.NewGuid()}");
+                cookieContainer.Add(new Cookie(".MinsideApp", response.AccessToken) { HttpOnly = true, Domain="localhost" });
+                cookieContainer.Add(new Cookie("test", Guid.NewGuid().ToString()) { HttpOnly = true, Domain = "localhost" });
+                var apiResponse = client.SendAsync(message).Result;
+                Console.WriteLine(apiResponse.Content.ReadAsStringAsync().Result);
+                //Console.WriteLine(client.GetStringAsync(baseUrl + "/api/values").Result);
             }
         }
 
@@ -35,7 +42,7 @@ namespace Queryer
                 var tokenResponse = GetUserToken(client);
                 CallApi(tokenResponse);
                 
-                Console.ReadLine();
+               Console.ReadLine();
             }
         }
     }

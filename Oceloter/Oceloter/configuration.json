@@ -15,7 +15,36 @@
       "AuthenticationOptions": {
         "Provider": "IdentityServer",
         "AllowedScopes": [
-          "api",
+          "api"
+        ],
+        "IdentityServerConfig": {
+          "ProviderRootUrl": "http://localhost:5000",
+          "ApiName": "api",
+          "ApiSecret": "secret",
+          "RequireHttps": false
+        }
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[sub] > value"
+      },
+      "RequestIdKey": "OcRequestId"
+    },
+    {
+      "DownstreamPathTemplate": "/api/file/",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 55169,
+      "UpstreamPathTemplate": "/api/file/",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+        "Provider": "IdentityServer",
+        "AllowedScopes": [
+          "api"
         ],
         "IdentityServerConfig": {
           "ProviderRootUrl": "http://localhost:5000",

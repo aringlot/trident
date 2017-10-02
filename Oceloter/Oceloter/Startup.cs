@@ -2,6 +2,7 @@
 using CacheManager.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -39,7 +40,10 @@ namespace Oceloter
                 })
                 .WithDictionaryHandle();
             };
-
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 600000000;
+            });
             services.AddOcelot(Configuration, settings);
         }
 
